@@ -1,10 +1,11 @@
 #pragma once
 
+#include "lexer.hh"
+
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
 class Parser {
 
   std::string name;
@@ -22,4 +23,12 @@ public:
   ~Parser(){};
   
   bool eat(std::string token);
+
+  // void app()
+  // {
+  //   this->l();
+  //   this->eat('<-');
+  //   this->ens();
+  // }
 };
+
