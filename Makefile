@@ -2,11 +2,13 @@ CXX=g++
 FLAGS= -std=c++14 -Wall -g -o
 
 SRC=src/*.cc
-DEP := $(shell find $(SOURCEDIR) -name '*.hh|*.hxx')src/*.hh
+DEP := $(shell find $(SOURCEDIR) -name '*.hh|*.hxx')
 BIN=FUNC
 
+.PHONY: all
+
 all: $(SRC)
-	$(CXX) $(FLAGS) $(BIN) $(SRC)
+	$(CXX) $(FLAGS) $(BIN) -Isrc $(SRC)
 
 clean:
-	$(RM) $(BIN) *~
+	$(RM) $(BIN) *~ src/*~ /#* src/#*
