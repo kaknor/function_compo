@@ -91,7 +91,7 @@ void Parser::ens()
 {
   try
     {
-      this->eat("\\|R|\|Q|\|Z|\|N");
+      this->eat("\\|R|\\|Q|\\|Z|\\|N");
     }
   catch (const std::domain_error& e)
     {
@@ -119,6 +119,7 @@ void Parser::parse()
   try
     {
       this->app();
+      std::cout << "Parsing terminated !\n" << std::endl;
     }
   catch(const std::invalid_argument& e)
     {
