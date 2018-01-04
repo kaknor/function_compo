@@ -2,7 +2,7 @@
 
 #include <string>
 
-class tape_reader
+class Tape_reader
 {
   std::string content;
   std::string::iterator cur;
@@ -10,6 +10,15 @@ class tape_reader
   unsigned line;
 
 public:
+
+  Tape_reader(std::string content)
+  {
+    content = content;
+    cur = content.begin();
+  }
+
+  ~Tape_reader(){};
+  
   //++ += =
   std::string operator=(std::string s)
   {
@@ -37,7 +46,7 @@ public:
   {
     return this->cur += n;
   }
-
+  
   operator std::string()
   {
     return this->content;

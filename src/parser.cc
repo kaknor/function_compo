@@ -1,12 +1,13 @@
 #include "parser.hh"
 
 // Read the file (named name), and return the content in a string
-std::string Parser::read_file()
+std::string &Parser::read_file()
 {
   std::ifstream file(this->name);
   std::stringstream buff;
   buff << file.rdbuf();
-  return buff.str();
+  std::string &s = &buff.str();
+  return s;
 }
 
 // return tuple with string of the next word plus the offset
@@ -14,15 +15,16 @@ std::string Parser::read_file()
 std::tuple<std::string, unsigned> Parser::get_next_word()
 {
   std::string::iterator cur = this->cur;
+  std::string content = this->cur;
   std::string::iterator it = cur;
   for (; *it != ' '; it++)
     continue;
   unsigned spaces = 0;
   for (std::string::iterator i = it ; *i == ' '; i++)
     spaces++;
-  auto b = std::distance(this->content.begin(), cur);
+  auto b = std::distance(content.begin(), cur);
   auto e = std::distance(cur, it);
-  std::string s = this->content.substr(b, e);
+  std::string s = content.substr(b, e);
   return std::make_tuple(s, spaces + e);  
 }
 

@@ -13,11 +13,11 @@
 class Parser {
 
   std::string name;
-  std::string content;
+  //std::string content;
   // TODO : classe pour gere les lignes et colonnes du fichier
-  tape_reader cur;
+  Tape_reader cur;
 
-  std::string read_file();
+  std::string &read_file();
 
   // TOOLBOX functions
   std::tuple<std::string, unsigned> get_next_word();
@@ -33,11 +33,9 @@ class Parser {
   void symbol();
   
 public:
-  Parser(std::string name): name(name)
-  {
-    content = read_file();
-    cur = content.begin();
-  }
+  Parser(std::string name) : name(name), cur(Tape_reader(read_file()))
+  {}
+
   ~Parser(){};
 
   void parse();
