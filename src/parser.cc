@@ -13,14 +13,15 @@ std::string Parser::read_file()
 // of this->cur
 std::tuple<std::string, unsigned> Parser::get_next_word()
 {
-  std::string::iterator it = this->cur;
+  std::string::iterator cur = this->cur;
+  std::string::iterator it = cur;
   for (; *it != ' '; it++)
     continue;
   unsigned spaces = 0;
   for (std::string::iterator i = it ; *i == ' '; i++)
     spaces++;
-  auto b = std::distance(this->content.begin(), this->cur);
-  auto e = std::distance(this->cur, it);
+  auto b = std::distance(this->content.begin(), cur);
+  auto e = std::distance(cur, it);
   std::string s = this->content.substr(b, e);
   return std::make_tuple(s, spaces + e);  
 }

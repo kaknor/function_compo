@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tape_reader.hh"
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -13,7 +15,7 @@ class Parser {
   std::string name;
   std::string content;
   // TODO : classe pour gere les lignes et colonnes du fichier
-  std::string::iterator cur;
+  tape_reader cur;
 
   std::string read_file();
 

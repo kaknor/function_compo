@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class tape_reader
 {
   std::string content;
@@ -7,6 +9,7 @@ class tape_reader
   unsigned column;
   unsigned line;
 
+public:
   //++ += =
   std::string operator=(std::string s)
   {
@@ -25,5 +28,23 @@ class tape_reader
     return this->cur++;
   }
 
+  std::string::iterator operator +=(unsigned n)
+  {
+    return this->cur += n;
+  }
+
+  std::string::iterator operator +=(int n)
+  {
+    return this->cur += n;
+  }
+
+  operator std::string()
+  {
+    return this->content;
+  }
   
+  operator std::string::iterator()
+  {
+    return this->cur;
+  }
 };
