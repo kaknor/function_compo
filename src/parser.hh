@@ -9,6 +9,7 @@
 #include <tuple>
 #include <regex>
 #include <exception>
+#include <memory>
 
 class Parser {
 
@@ -17,7 +18,7 @@ class Parser {
   // TODO : classe pour gere les lignes et colonnes du fichier
   Tape_reader cur;
 
-  std::string &read_file();
+  // std::string read_file();
 
   // TOOLBOX functions
   std::tuple<std::string, unsigned> get_next_word();
@@ -33,9 +34,9 @@ class Parser {
   void symbol();
   
 public:
-  Parser(std::string name) : name(name), cur(Tape_reader(read_file()))
-  {}
-
+  //on appel le constructeur de cur de base sinon ca fait une copie et ca casse tout
+  Parser(std::string name) : name(name), cur(name){}
+  
   ~Parser(){};
 
   void parse();
