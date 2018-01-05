@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
   else
     {
       try
-	{
-	  for (int i = 1; i <= argc; i++)
+      	{
+	  for (int i = 1; i < argc; i++)
 	    {
 	      Parser p = Parser(argv[i]);
 	      p.parse();
@@ -20,12 +20,12 @@ int main(int argc, char *argv[])
 	  return 0;
 	}
       catch(const std::exception& e)
-	{
-	  std::cerr << "Program error : " << e.what() << std::endl;
-	}
+      	{
+      	  std::cerr << "Program error : " << e.what() << std::endl;
+      	}
       catch(...)
-	{
-	  std::cerr << "Program error : Unexpected error\n" << std::endl;
-	}
+      	{
+      	  std::cerr << "Program error : Unexpected error\n" << std::endl;
+      	}
     }
 }

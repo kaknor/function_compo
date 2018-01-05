@@ -1,29 +1,36 @@
 #pragma once
 
-class tape_reader
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <memory>
+
+class Tape_reader
 {
-  std::string content;
-  std::string::iterator cur;
+  const std::string &name;
+  const std::string *content;
+  std::string::const_iterator cur;
   unsigned column;
   unsigned line;
 
-  //++ += =
-  std::string operator=(std::string s)
-  {
-    this->content = s;
-    return this->content;
-  }
-
-  std::string::iterator operator=(std::string::iterator i)
-  {
-    this->cur = i;
-    return this->cur;
-  }
-
-  std::string::iterator operator++()
-  {
-    return this->cur++;
-  }
-
+  void read_file();
   
+public:
+
+  Tape_reader(std::string name) : name(name)
+  {
+    this->read_file();
+    this->cur = content->begin();
+  }
+
+  ~Tape_reader()
+  {
+    delete this->content;
+  };
+
+  std::string::const_iterator operator++();
+  std::string::const_iterator operator +=(unsigned n);
+  std::string::const_iterator operator +=(int n);
+  const std::string &get_content() const;
+  std::string::const_iterator get_cur() const;
 };

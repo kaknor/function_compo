@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tape_reader.hh"
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -7,15 +9,16 @@
 #include <tuple>
 #include <regex>
 #include <exception>
+#include <memory>
 
 class Parser {
 
   std::string name;
-  std::string content;
+  //std::string content;
   // TODO : classe pour gere les lignes et colonnes du fichier
-  std::string::iterator cur;
+  Tape_reader cur;
 
-  std::string read_file();
+  // std::string read_file();
 
   // TOOLBOX functions
   std::tuple<std::string, unsigned> get_next_word();
@@ -31,11 +34,9 @@ class Parser {
   void symbol();
   
 public:
-  Parser(std::string name): name(name)
-  {
-    content = read_file();
-    cur = content.begin();
-  }
+  //on appel le constructeur de cur de base sinon ca fait une copie et ca casse tout
+  Parser(std::string name) : name(name), cur(name){}
+  
   ~Parser(){};
 
   void parse();

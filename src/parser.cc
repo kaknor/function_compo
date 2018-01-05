@@ -1,30 +1,21 @@
 #include "parser.hh"
 
-// Read the file (named name), and return the content in a string
-std::string Parser::read_file()
-{
-  std::ifstream file(this->name.c_str());
-  if (!file.good())
-    throw std::invalid_argument("The file : " + this->name + " cannot be open\n");
-  std::stringstream buff;
-  buff << file.rdbuf();
-  return buff.str();
-}
-
 // return tuple with string of the next word plus the offset
 // of this->cur
 std::tuple<std::string, unsigned> Parser::get_next_word()
 {
-  std::string::iterator it = this->cur;
-  for (; *it != ' '; it++)
+  std::string::const_iterator cur = this->cur.get_cur();
+  const std::string &content = this->cur.get_content();
+  std::string::const_iterator it = cur;
+  for (; *it != '\0' && *it != ' '; it++)
     continue;
   unsigned spaces = 0;
-  for (std::string::iterator i = it ; *i == ' '; i++)
+  for (std::string::const_iterator i = it ; *i == ' '; i++)
     spaces++;
-  auto b = std::distance(this->content.begin(), this->cur);
-  auto e = std::distance(this->cur, it);
-  std::string s = this->content.substr(b, e);
-  return std::make_tuple(s, spaces + e);
+  auto b = std::distance(content.begin(), cur);
+  auto e = std::distance(cur, it);
+  std::string s = content.substr(b, e);
+  return std::make_tuple(s, spaces + e);  
 }
 
 // lookahead of 1
@@ -121,7 +112,7 @@ void Parser::parse()
   try
     {
       this->app();
-      std::cout << "Parsing terminated !\n" << std::endl;
+      std::cout << this->name + " : Parsing terminated !\n" << std::endl;
     }
   catch(const std::invalid_argument& e)
     {
