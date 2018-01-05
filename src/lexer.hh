@@ -12,5 +12,5 @@ public:
   Lexer(){};
   ~Lexer(){};
 
-  static bool eat(std::string content, std::string::iterator cur, std::string token);
+  static bool eat(std::string *content, std::string::iterator *cur, std::string token);
 };

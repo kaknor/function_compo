@@ -3,7 +3,9 @@
 // Read the file (named name), and return the content in a string
 std::string Parser::read_file()
 {
-  std::ifstream file(this->name);
+  std::ifstream file(this->name.c_str());
+  if (!file.good())
+    throw std::invalid_argument("The file : " + this->name + " cannot be open\n");
   std::stringstream buff;
   buff << file.rdbuf();
   return buff.str();
@@ -22,7 +24,7 @@ std::tuple<std::string, unsigned> Parser::get_next_word()
   auto b = std::distance(this->content.begin(), this->cur);
   auto e = std::distance(this->cur, it);
   std::string s = this->content.substr(b, e);
-  return std::make_tuple(s, spaces + e);  
+  return std::make_tuple(s, spaces + e);
 }
 
 // lookahead of 1
@@ -91,7 +93,7 @@ void Parser::ens()
 {
   try
     {
-      this->eat("\\|R|\|Q|\|Z|\|N");
+      this->eat("\\|R|\\|Q|\\|Z|\\|N");
     }
   catch (const std::domain_error& e)
     {
@@ -119,9 +121,14 @@ void Parser::parse()
   try
     {
       this->app();
+      std::cout << "Parsing terminated !\n" << std::endl;
     }
   catch(const std::invalid_argument& e)
     {
       std::cerr << "Syntax error : " << e.what() << std::endl;
+    }
+  catch(...)
+    {
+      std::cerr << "Parse error : unexpected error\n" << std::endl;
     }
 }
