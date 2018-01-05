@@ -17,7 +17,7 @@ class Tape_reader
   
 public:
 
-  Tape_reader(std::string name) : name(name)
+  Tape_reader(std::string name) : name(name), column(0), line(0)
   {
     this->read_file();
     this->cur = content->begin();

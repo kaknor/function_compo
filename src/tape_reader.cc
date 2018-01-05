@@ -4,6 +4,8 @@
 void Tape_reader::read_file()
 {
   std::ifstream file(this->name);
+  if (!file.good())
+    throw std::invalid_argument("The file : "+ this->name +" cannot be open\n");
   std::stringstream buff;
   buff << file.rdbuf();
   this->content = new std::string(buff.str());
