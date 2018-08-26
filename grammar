@@ -1,0 +1,11 @@
+Z -> D$
+D -> Soit App Prop | Soit App Prop Avec | D
+Avec -> avec, App Prop
+App -> L <- Ens
+L -> S, L | S
+S -> //lvalue
+Ens -> R | Q | Z | N
+prop -> Prop + T | T
+T -> T * F | F
+F -> S | Func
+Func -> S(s) = Prop
