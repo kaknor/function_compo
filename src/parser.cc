@@ -2,12 +2,13 @@
 
 // return tuple with string of the next word plus the offset
 // of this->cur
+// TODO : Create a list of separators.
 std::tuple<std::string, unsigned> Parser::get_next_word()
 {
   std::string::const_iterator cur = this->cur.get_cur();
   const std::string &content = this->cur.get_content();
   std::string::const_iterator it = cur;
-  for (; *it != '\0' && *it != ' '; it++)
+  for (; *it != '\0' && *it != ' ' && *it != '\n'; it++)
     continue;
   unsigned spaces = 0;
   for (std::string::const_iterator i = it ; *i == ' '; i++)
@@ -39,6 +40,14 @@ void Parser::eat(std::string token)
       return;
     }
   throw std::domain_error("The token : " + s + " is unexpected here\n");
+}
+
+void Parser::dec()
+{
+  this->eat("Soit");
+  this->app();
+  // handle prop.
+  // handle recursion.
 }
 
 // The set membership (appartenance) grammar rule
@@ -111,8 +120,9 @@ void Parser::parse()
 {
   try
     {
-      this->app();
-      std::cout << this->name + " : Parsing terminated !\n" << std::endl;
+      this->dec();
+      // this->app();	       
+      std::cout << this->cur.get_name() + " : Parsing terminated !\n" << std::endl;
     }
   catch(const std::invalid_argument& e)
     {

@@ -13,21 +13,18 @@
 
 class Parser {
 
-  std::string name;
-  //std::string content;
   // TODO : classe pour gere les lignes et colonnes du fichier
   Tape_reader cur;
-
-  // std::string read_file();
 
   // TOOLBOX functions
   std::tuple<std::string, unsigned> get_next_word();
   std::string lookahead();
-  // TODO : classe pour gere propement
-  // les tokens simple et les regex
+  // TODO : classe pour gerer propement
+  // les tokens simples et les regex
   void eat(std::string token);
 
   // grammar functions
+  void dec();
   void app();
   void list();
   void ens();
@@ -35,7 +32,7 @@ class Parser {
   
 public:
   //on appel le constructeur de cur de base sinon ca fait une copie et ca casse tout
-  Parser(std::string name) : name(name), cur(name){}
+  Parser(std::string name) : cur(name){}
   
   ~Parser(){};
 

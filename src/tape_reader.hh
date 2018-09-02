@@ -4,24 +4,31 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <iostream>
 
 class Tape_reader
 {
-  const std::string &name;
+  const std::string *name;
   const std::string *content;
   std::string::const_iterator cur;
   unsigned column;
   unsigned line;
 
   void read_file();
+  void incr();
   
 public:
 
-  Tape_reader(std::string name) : name(name), column(0), line(0)
-  {
-    this->read_file();
-    this->cur = content->begin();
-  }
+  Tape_reader(std::string name)
+    try : name(new std::string(name)), column(0), line(0)
+	    {
+	      this->read_file();
+	      this->cur = content->begin();
+	    }
+  catch(std::exception& e)
+    {
+      std::cerr << "Parse error : unexpected error with tape_reader construction" << e.what() << std::endl;
+    }
 
   ~Tape_reader()
   {
@@ -33,4 +40,5 @@ public:
   std::string::const_iterator operator +=(int n);
   const std::string &get_content() const;
   std::string::const_iterator get_cur() const;
+  const std::string &get_name() const;
 };

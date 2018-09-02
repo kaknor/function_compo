@@ -6,9 +6,6 @@
 
 class Lexer
 {
-  // TODO : faire un tableau avec les sperateurs
-  // ie : \t \n \s etc...
-public:
   Lexer(){};
   ~Lexer(){};
 
