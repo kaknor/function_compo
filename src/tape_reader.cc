@@ -59,3 +59,8 @@ const std::string &Tape_reader::get_name() const
 {
   return *this->name;
 }
+
+bool Tape_reader::get_is_prompt() const
+{
+  return this->is_prompt;
+}

@@ -121,10 +121,16 @@ void Parser::parse()
   try
     {
       this->dec();
-      // this->app();	       
-      std::cout << this->cur.get_name() + " : Parsing terminated !\n" << std::endl;
+      if (this->cur.get_is_prompt())
+	std::cout << "Interactive Parsing terminated !" << std::endl;
+      else
+	std::cout << this->cur.get_name() + " : Parsing terminated !\n" << std::endl;
     }
   catch(const std::invalid_argument& e)
+    {
+      std::cerr << "Syntax error : " << e.what() << std::endl;
+    }
+  catch(const std::domain_error& e)
     {
       std::cerr << "Syntax error : " << e.what() << std::endl;
     }

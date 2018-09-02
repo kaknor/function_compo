@@ -12,10 +12,24 @@ int main(int argc, char *argv[])
     {
       try
       	{
-	  for (int i = 1; i < argc; i++)
+	  const std::string prompt = "-i";
+	  if (prompt.compare(argv[1]))
 	    {
-	      Parser p = Parser(argv[i]);
+	      for (int i = 1; i < argc; i++)
+		{
+		  Parser p = Parser(argv[i], false);
+		  p.parse();
+		}
+	    }
+	  // Interactive mode is on.
+	  std::cout << "Interactive mode is on\n";
+	  std::cout << ">>> ";
+	  std::string input;
+	  while(std::getline(std::cin, input))
+	    {
+	      Parser p = Parser(input, true);
 	      p.parse();
+	      std::cout << ">>> ";
 	    }
 	  return 0;
 	}

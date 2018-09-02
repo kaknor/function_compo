@@ -32,7 +32,7 @@ class Parser {
   
 public:
   //on appel le constructeur de cur de base sinon ca fait une copie et ca casse tout
-  Parser(std::string name) : cur(name){}
+  Parser(std::string name, bool is_prompt) : cur(name, is_prompt){}
   
   ~Parser(){};
 
