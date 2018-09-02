@@ -29,6 +29,12 @@ class Parser {
   void list();
   void ens();
   void symbol();
+
+  // arithmetic rules.
+  void prop();
+  void term();
+  void final();
+  // void func();
   
 public:
   //on appel le constructeur de cur de base sinon ca fait une copie et ca casse tout

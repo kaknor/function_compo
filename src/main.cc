@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 		  Parser p = Parser(argv[i], false);
 		  p.parse();
 		}
+	      return 0;
 	    }
 	  // Interactive mode is on.
 	  std::cout << "Interactive mode is on\n";

@@ -8,13 +8,21 @@ std::tuple<std::string, unsigned> Parser::get_next_word()
   std::string::const_iterator cur = this->cur.get_cur();
   const std::string &content = this->cur.get_content();
   std::string::const_iterator it = cur;
-  for (; *it != '\0' && *it != ' ' && *it != '\n'; it++)
+  // TODO : Change for tokens that can be concatenate such as , (ex : a, b).
+  for (; *it != '\0' && *it != ' ' && *it != '\n' && *it != ','; it++)
     continue;
   unsigned spaces = 0;
   for (std::string::const_iterator i = it ; *i == ' '; i++)
     spaces++;
   auto b = std::distance(content.begin(), cur);
   auto e = std::distance(cur, it);
+  // TODO : Change for all tokens that can be concatenate without spaces.  
+  if (*it == ',' && e == 0)
+    {
+      for (std::string::const_iterator i = it + 1 ; *i == ' '; i++)
+	spaces++;
+      e++;
+    }
   std::string s = content.substr(b, e);
   return std::make_tuple(s, spaces + e);  
 }
@@ -42,11 +50,12 @@ void Parser::eat(std::string token)
   throw std::domain_error("The token : " + s + " is unexpected here\n");
 }
 
+// BNF : Soit <App> <Prop> | Soit <App> <Prop> Avec | D
 void Parser::dec()
 {
   this->eat("Soit");
   this->app();
-  // handle prop.
+  this->prop();
   // handle recursion.
 }
 
@@ -114,6 +123,39 @@ void Parser::symbol()
   this->cur += off;
   if (!res)
     throw std::invalid_argument("The symbol pattern is not matching, expecting [a-zA-Z][a-zA-Z0-9]* received : " + la + "\n");
+}
+
+void Parser::prop()
+{
+  this->term();
+  std::string la = this->lookahead();
+  if (la == "+")
+    {
+      this->eat("\\+");
+      this->term();
+    }
+}
+
+void Parser::term()
+{
+  this->final();
+  std::string la = this->lookahead();
+  if (la == "*")
+    {
+      this->eat("\\*");
+      this->final();
+    }
+}
+
+void Parser::final()
+{
+  if (*(this->cur.get_cur()) == '(')
+    {
+      this->prop();
+      this->eat(")");
+    }
+  else
+    this->symbol();
 }
 
 void Parser::parse()
