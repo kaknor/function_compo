@@ -151,8 +151,9 @@ void Parser::final()
 {
   if (*(this->cur.get_cur()) == '(')
     {
+      this->eat("\\(");
       this->prop();
-      this->eat(")");
+      this->eat("\\)");
     }
   else
     this->symbol();
@@ -170,14 +171,14 @@ void Parser::parse()
     }
   catch(const std::invalid_argument& e)
     {
-      std::cerr << "Syntax error : " << e.what() << std::endl;
+      std::cerr << this->cur.get_name() + " : Syntax error : " << e.what() << std::endl;
     }
   catch(const std::domain_error& e)
     {
-      std::cerr << "Syntax error : " << e.what() << std::endl;
+      std::cerr << this->cur.get_name() + " : Syntax error : " << e.what() << std::endl;
     }
   catch(...)
     {
-      std::cerr << "Parse error : unexpected error\n" << std::endl;
+      std::cerr << this->cur.get_name() + " : Parse error : unexpected error\n" << std::endl;
     }
 }
