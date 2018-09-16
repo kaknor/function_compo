@@ -161,24 +161,17 @@ void Parser::final()
 
 void Parser::parse()
 {
-  try
-    {
-      this->dec();
-      if (this->cur.get_is_prompt())
-	std::cout << "Interactive Parsing terminated !" << std::endl;
-      else
-	std::cout << this->cur.get_name() + " : Parsing terminated !\n" << std::endl;
-    }
-  catch(const std::invalid_argument& e)
-    {
-      std::cerr << this->cur.get_name() + " : Syntax error : " << e.what() << std::endl;
-    }
-  catch(const std::domain_error& e)
-    {
-      std::cerr << this->cur.get_name() + " : Syntax error : " << e.what() << std::endl;
-    }
-  catch(...)
-    {
-      std::cerr << this->cur.get_name() + " : Parse error : unexpected error\n" << std::endl;
-    }
+  // try
+  //   {
+  this->dec();
+  if (this->cur.get_is_prompt())
+    std::cout << "Interactive Parsing terminated !" << std::endl;
+  else
+    std::cout << this->cur.get_name() + " : Parsing terminated !\n" << std::endl;
+    // }
+
+  // catch(...)
+  //   {
+  //     std::cerr << this->cur.get_name() + " : Parse error : unexpected error\n" << std::endl;
+  //   }
 }

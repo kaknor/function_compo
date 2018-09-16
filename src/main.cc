@@ -34,13 +34,27 @@ int main(int argc, char *argv[])
 	    }
 	  return 0;
 	}
+      catch(const std::invalid_argument& e)
+      	{
+      	  std::cerr << // this->cur.get_name() +
+      	    " : Syntax error : " << e.what() << std::endl;
+	  return 1;
+      	}
+      catch(const std::domain_error& e)
+      	{
+      	  std::cerr << // this->cur.get_name()
+      	    + " : Syntax error : " << e.what() << std::endl;
+	  return 1;
+      	}
       catch(const std::exception& e)
       	{
       	  std::cerr << "Program error : " << e.what() << std::endl;
+      	  return 1;
       	}
       catch(...)
       	{
       	  std::cerr << "Program error : Unexpected error\n" << std::endl;
+	  return 1;
       	}
     }
 }
